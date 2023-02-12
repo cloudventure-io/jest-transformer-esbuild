@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.10] - 2023-02-12
+### Fixed
+ * Fix bundling of the release package
+
 ## [1.0.9] - 2023-02-12
 ### Added
  * Add esbuild 0.16 and 0.17 support

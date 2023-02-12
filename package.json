@@ -1,7 +1,7 @@
 {
   "name": "@cloudventure/jest-transformer-esbuild",
   "description": "Jest transformer using esbuild",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "license": "MIT",
   "scripts": {
     "prepare": "esbuild --platform=node --target=node16 --outfile=build.mjs --format=esm --log-level=error build.ts",
