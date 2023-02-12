@@ -1,7 +1,7 @@
 {
   "name": "@cloudventure/jest-transformer-esbuild",
   "description": "Jest transformer using esbuild",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "license": "MIT",
   "scripts": {
     "prepare": "esbuild --platform=node --target=node16 --outfile=build.mjs --format=esm --log-level=error build.ts",
@@ -19,7 +19,7 @@
   "module": "dist/index.mjs",
   "dependencies": {
     "babel-plugin-jest-hoist": "28 || 29",
-    "esbuild": "0.14 || 0.15"
+    "esbuild": "0.14 || 0.15 || 0.16 || 0.17"
   },
   "devDependencies": {
     "@types/jest": "^29.1.1",
