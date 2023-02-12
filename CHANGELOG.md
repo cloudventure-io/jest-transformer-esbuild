@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.9] - 2023-02-12
+### Added
+ * Add esbuild 0.16 and 0.17 support
+ * Add matrix tests for various nodejs and esbuild versions
+
 ## [1.0.8] - 2022-10-04
 ### Fixed
  * Fix issue with default hoistMatch in transformerConfig
