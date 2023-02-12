@@ -33,7 +33,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Install esbuild
-        run: yarn install esbuild@${{ matrix.esbuild-version }}
+        run: yarn add esbuild@${{ matrix.esbuild-version }}
 
       - name: Build
         run: yarn build
