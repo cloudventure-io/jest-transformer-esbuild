@@ -12,14 +12,47 @@ permissions:
   contents: write
 
 jobs:
+  tests:
+    name: Tests
+    strategy:
+      matrix:
+        node-version: [14, 16, 18]
+        esbuild-version: [0.14, 0.15, 0.16, 0.17]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout the code
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+
+      - name: Install esbuild
+        run: yarn install esbuild@${{ matrix.esbuild-version }}
+
+      - name: Build
+        run: yarn build
+
+      - name: Run Tests (CJS)
+        run: yarn test
+
+      - name: Run Tests (ESM)
+        run: yarn test:esm
+
   publish:
+    needs: [tests]
     name: Publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         name: Checkout the code
 
-      - run: jq -r '"::set-output name=version::v" + .version' package.json
+      - run: jq -r '"version=v" + .version' package.json >> $GITHUB_OUTPUT
         id: package-json
 
       - uses: actions/setup-node@v3
@@ -32,12 +65,6 @@ jobs:
 
       - name: Build
         run: yarn build
-
-      - name: Run Tests (CJS)
-        run: yarn test
-
-      - name: Run Tests (ESM)
-        run: yarn test:esm
 
       - name: Publish
         uses: JS-DevTools/npm-publish@v1
