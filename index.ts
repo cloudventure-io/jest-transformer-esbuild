@@ -9,6 +9,7 @@ import {
 } from "@jest/transform";
 import * as esbuild from "esbuild";
 import { globsToMatcher } from "jest-util";
+import { extname } from "path";
 
 export interface TransformerConfig {
   format?: "esm" | "cjs";
@@ -30,6 +31,12 @@ const babelOptions: babel.TransformOptions = {
   plugins: ["jest-hoist"],
   sourceMaps: "inline",
   configFile: false,
+};
+
+const loaders: Array<esbuild.Loader> = ["ts", "tsx", "js"];
+const getLoader = (path: string): esbuild.Loader => {
+  const ext = extname(path) as esbuild.Loader;
+  return loaders.includes(ext) ? ext : "default";
 };
 
 const handleResult = (
@@ -78,6 +85,7 @@ const createTransformer: TransformerCreator<
         ...esbuildOptions,
         sourcefile: path,
         format: options?.transformerConfig?.format || "cjs",
+        loader: getLoader(path),
       });
 
       let babelResult: babel.BabelFileResult | null | undefined;
@@ -98,6 +106,7 @@ const createTransformer: TransformerCreator<
         ...esbuildOptions,
         sourcefile: path,
         format: options?.transformerConfig?.format || "esm",
+        loader: getLoader(path),
       });
 
       let babelResult: babel.BabelFileResult | null | undefined;
