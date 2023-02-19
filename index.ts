@@ -33,11 +33,16 @@ const babelOptions: babel.TransformOptions = {
   configFile: false,
 };
 
-const loaders: Array<esbuild.Loader> = ["ts", "tsx", "js"];
-const getLoader = (path: string): esbuild.Loader => {
-  const ext = extname(path) as esbuild.Loader;
-  return loaders.includes(ext) ? ext : "default";
+const loaders: Record<string, esbuild.Loader> = {
+  ".ts": "ts",
+  ".tsx": "tsx",
+  ".js": "js",
+  ".cjs": "js",
+  ".mjs": "js",
 };
+
+const getLoader = (path: string): esbuild.Loader =>
+  loaders[extname(path)] || "default";
 
 const handleResult = (
   esbuildResult: esbuild.TransformResult,
