@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14, 16, 18]
-        esbuild-version: [0.14, 0.15, 0.16, 0.17]
+        esbuild-version: [0.14, 0.15, 0.16, 0.17, 0.18, 0.19]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

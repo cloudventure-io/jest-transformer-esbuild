@@ -4,7 +4,6 @@ import typescript from "typescript";
 const run = async () => {
   const esbuildOptions: esbuild.BuildOptions = {
     platform: "node",
-    target: "node16",
     bundle: false,
     entryPoints: ["index.ts"],
     sourcemap: "external",
