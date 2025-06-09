@@ -32,6 +32,7 @@ jobs:
         name: Install pnpm
         with:
           standalone: true
+          version: 10
 
       - name: Install esbuild
         run: pnpm add esbuild@${{ matrix.esbuild-version }}
