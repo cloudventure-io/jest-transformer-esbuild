@@ -16,8 +16,8 @@ jobs:
     name: Tests
     strategy:
       matrix:
-        node-version: [20, 21, 22, 23, 24]
-        esbuild-version: [0.20, 0.21, 0.22, 0.23, 0.24, 0.25]
+        node-version: ["20", "21", "22", "23", "24"]
+        esbuild-version: ["0.20", "0.21", "0.22", "0.23", "0.24", "0.25"]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
