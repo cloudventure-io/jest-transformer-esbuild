@@ -57,6 +57,12 @@ jobs:
       - run: jq -r '"version=v" + .version' package.json >> $GITHUB_OUTPUT
         id: package-json
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          standalone: true
+          version: 10
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
