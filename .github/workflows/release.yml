@@ -16,62 +16,64 @@ jobs:
     name: Tests
     strategy:
       matrix:
-        node-version: [14, 16, 18]
-        esbuild-version: [0.14, 0.15, 0.16, 0.17, 0.18, 0.19]
+        node-version: [20, 21, 22, 23, 24]
+        esbuild-version: [0.20, 0.21, 0.22, 0.23, 0.24, 0.25]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout the code
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install
-        run: yarn install --frozen-lockfile
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          standalone: true
 
       - name: Install esbuild
-        run: yarn add esbuild@${{ matrix.esbuild-version }}
+        run: pnpm add esbuild@${{ matrix.esbuild-version }}
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Run Tests (CJS)
-        run: yarn test
+        run: pnpm test
 
       - name: Run Tests (ESM)
-        run: yarn test:esm
+        run: pnpm test:esm
 
   publish:
     needs: [tests]
     name: Publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout the code
 
       - run: jq -r '"version=v" + .version' package.json >> $GITHUB_OUTPUT
         id: package-json
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
-          cache: "yarn"
+          node-version: 22
+          cache: pnpm
 
       - name: Install
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Publish
-        uses: JS-DevTools/npm-publish@v1
+        uses: JS-DevTools/npm-publish@v3
         id: publish
         with:
           token: ${{ secrets.NPMJS_TOKEN }}
           access: public
-          check-version: true
+          strategy: upgrade
 
       - name: Tag
         if: steps.publish.outputs.type != 'none'
