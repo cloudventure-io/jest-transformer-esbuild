@@ -1,7 +1,7 @@
 {
   "name": "@cloudventure/jest-transformer-esbuild",
   "description": "Jest transformer using esbuild",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "license": "MIT",
   "scripts": {
     "prepare": "esbuild --platform=node --target=node22 --outfile=build.mjs --format=esm --log-level=error build.ts",
@@ -23,11 +23,12 @@
   },
   "devDependencies": {
     "@types/jest": "28 || 29",
-    "jest": "28 || 29",
+    "@types/node": "^24.0.13",
+    "jest": "28 || 29 || 30",
     "typescript": "^5"
   },
   "peerDependencies": {
-    "jest": "28 || 29"
+    "jest": "28 || 29 || 30"
   },
   "keywords": [
     "jest",
