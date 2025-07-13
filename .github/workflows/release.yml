@@ -18,6 +18,7 @@ jobs:
       matrix:
         node-version: ["20", "21", "22", "23", "24"]
         esbuild-version: ["0.20", "0.21", "0.22", "0.23", "0.24", "0.25"]
+        jest-version: ["28", "29", "30"]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -34,8 +35,8 @@ jobs:
           standalone: true
           version: 10
 
-      - name: Install esbuild
-        run: pnpm add esbuild@${{ matrix.esbuild-version }}
+      - name: Install specific versions
+        run: pnpm add esbuild@${{ matrix.esbuild-version }} jest@${{ matrix.jest-version }}
 
       - name: Build
         run: pnpm build
